@@ -1,5 +1,6 @@
 package com.fir.system.Controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fir.system.Entity.Police;
 import com.fir.system.Entity.PoliceStation;
 import com.fir.system.Entity.User;
@@ -19,6 +21,8 @@ import com.fir.system.Service.Implement.PoliceIntrImpl;
 import com.fir.system.Service.Implement.PoliceStationIntrImpl;
 import com.fir.system.Service.Implement.UserIntrImpl;
 
+import aj.org.objectweb.asm.TypeReference;
+
 @RestController
 @RequestMapping(value="management/")
 public class FirController {
@@ -26,6 +30,7 @@ public class FirController {
 	private final String type1 ="User";
 	private final String type2 ="Police";
 	private final String type3 ="Station";
+	
 	@Autowired
 	private FirIntrImpl friServRepo;
 	@Autowired
@@ -68,5 +73,30 @@ public class FirController {
 		else
 			throw new UserException("Invalid Type of registrations, please check the type of registration or You are missing the Type. !!!");
 		
+	}
+	
+	@PostMapping(value="/user/fir")
+	public ResponseEntity<Object> registerFir(@RequestBody Map<String,Object> map)
+	{
+		ObjectMapper objectMapper = new ObjectMapper();
+		String crimeDetail  =String.valueOf(map.get("crimeDetail"));
+//		LocalDateTime localDateTime  =objectMapper.convertValue(map.get("localDateTime"),LocalDateTime.class);
+		User user =objectMapper.convertValue(map.get("applicant"),User.class);
+		Object list =map.get("criminals");
+//		List<User> list2 = ((List<User>) list).stream().map(s->(User)s).collect(Collectors.toList()); 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		Police police =objectMapper.convertValue(map.get("officer"),Police.class);
+		PoliceStation ps =objectMapper.convertValue(map.get("policeStation"),PoliceStation.class);
+		boolean bol =(boolean)map.get("isOpen");
+		return new ResponseEntity<Object>(list2,HttpStatus.ACCEPTED);
 	}
 }
