@@ -19,7 +19,7 @@ public class PoliceStation {
 	private Integer stationId;
 	private String stationCode;
 	private String address;
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	private Police officerInCharge;
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="constable_in_station")

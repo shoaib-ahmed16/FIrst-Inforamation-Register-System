@@ -1,17 +1,19 @@
 package com.fir.system.Controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fir.system.DTO.FirDTO;
 import com.fir.system.Entity.Police;
 import com.fir.system.Entity.PoliceStation;
 import com.fir.system.Entity.User;
@@ -20,8 +22,6 @@ import com.fir.system.Service.Implement.FirIntrImpl;
 import com.fir.system.Service.Implement.PoliceIntrImpl;
 import com.fir.system.Service.Implement.PoliceStationIntrImpl;
 import com.fir.system.Service.Implement.UserIntrImpl;
-
-import aj.org.objectweb.asm.TypeReference;
 
 @RestController
 @RequestMapping(value="management/")
@@ -76,27 +76,21 @@ public class FirController {
 	}
 	
 	@PostMapping(value="/user/fir")
-	public ResponseEntity<Object> registerFir(@RequestBody Map<String,Object> map)
+	public ResponseEntity<Object> registerFir(@RequestBody FirDTO firDto)
 	{
-		ObjectMapper objectMapper = new ObjectMapper();
-		String crimeDetail  =String.valueOf(map.get("crimeDetail"));
-//		LocalDateTime localDateTime  =objectMapper.convertValue(map.get("localDateTime"),LocalDateTime.class);
-		User user =objectMapper.convertValue(map.get("applicant"),User.class);
-		Object list =map.get("criminals");
-//		List<User> list2 = ((List<User>) list).stream().map(s->(User)s).collect(Collectors.toList()); 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		Police police =objectMapper.convertValue(map.get("officer"),Police.class);
-		PoliceStation ps =objectMapper.convertValue(map.get("policeStation"),PoliceStation.class);
-		boolean bol =(boolean)map.get("isOpen");
-		return new ResponseEntity<Object>(list2,HttpStatus.ACCEPTED);
+		friServRepo.registerFir(firDto);
+		return new ResponseEntity<Object>(firDto,HttpStatus.ACCEPTED);
+	}
+	
+//	@GetMapping(value="/user/fir/{stationId}")
+//	public ResponseEntity<FirDTO> getOldest_Open_Fir_from_Station(@PathVariable("stationId") Integer stationId)
+//	{
+//		return new ResponseEntity<FirDTO>(,HttpStatus.ACCEPTED);
+//	}
+	@DeleteMapping(value="/user/fir/{firId}")
+	public ResponseEntity<Object> deleteFir(@PathVariable("firId") Integer firId)
+	{
+		friServRepo.deleteFir(firId);
+		return new ResponseEntity<Object>("Delete",HttpStatus.ACCEPTED);
 	}
 }

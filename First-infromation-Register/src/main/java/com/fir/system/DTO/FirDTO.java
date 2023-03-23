@@ -1,36 +1,22 @@
-package com.fir.system.Entity;
+package com.fir.system.DTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.OrderColumn;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fir.system.Entity.Police;
+import com.fir.system.Entity.PoliceStation;
+import com.fir.system.Entity.User;
 
-@Entity
-public class Fir {
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+public class FirDTO {
+
 	private Integer firId;
 	private String crimeDetail;
+//	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDateTime localDateTime;
-	@OneToOne(cascade=CascadeType.ALL)
 	private User applicant;
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="criminal_under_Register_fir")
-	@OrderColumn(name="criminals")
 	private List<User> criminals;
-	
-	@ManyToOne(targetEntity=Police.class,cascade=CascadeType.ALL)  
 	private Police officer;
-	@ManyToOne(targetEntity=PoliceStation.class,cascade=CascadeType.ALL)  
 	private PoliceStation policeStation;
 	private boolean isOpen;
 	public Integer getFirId() {
@@ -81,7 +67,7 @@ public class Fir {
 	public void setOpen(boolean isOpen) {
 		this.isOpen = isOpen;
 	}
-	public Fir(Integer firId, String crimeDetail, LocalDateTime localDateTime, User applicant, List<User> criminals,
+	public FirDTO(Integer firId, String crimeDetail, LocalDateTime localDateTime, User applicant, List<User> criminals,
 			Police officer, PoliceStation policeStation, boolean isOpen) {
 		super();
 		this.firId = firId;
@@ -93,8 +79,7 @@ public class Fir {
 		this.policeStation = policeStation;
 		this.isOpen = isOpen;
 	}
-	public Fir() {
+	public FirDTO() {
 		
 	}
-	
 }
