@@ -1,13 +1,13 @@
 package com.fir.system.Service.Implement;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fir.system.DTO.FirDTO;
 import com.fir.system.Entity.Fir;
-import com.fir.system.Entity.User;
+import com.fir.system.GlobalExceptionHandler.UserException;
 import com.fir.system.Repositroy.FirRepository;
 import com.fir.system.Repositroy.PoliceRepository;
 import com.fir.system.Repositroy.PoliceStationRepository;
@@ -32,8 +32,28 @@ public class FirIntrImpl implements FirIntr{
 		firRepo.save(fir);
 		firRepo.flush();
 	}
-	
-	public Fir firDtoToFir(FirDTO firDto)
+
+	@Override
+	public void deleteFir(Integer firId) {
+		// TODO Auto-generated method stub
+		firRepo.deleteById(firId);
+	}
+
+	@Override
+	public FirDTO updateFir(Integer firId,FirDTO firDto) {
+		// TODO Auto-generated method stub
+		Optional<Fir> firUp =firRepo.findById(firId);
+		if(firUp.isPresent())
+		{
+			Fir fir =firUp.get();
+			Fir firNew = firDtoToFir(firDto);
+			firRepo.save(firNew);
+			firRepo.flush();
+			return firDto;
+		}
+		throw new UserException("Not found any Fir for the enter Fir Id"+firId);
+	}
+	 protected Fir firDtoToFir(FirDTO firDto)
 	{
 		Fir fir = new Fir();
 		fir.setApplicant(firDto.getApplicant());
@@ -41,14 +61,8 @@ public class FirIntrImpl implements FirIntr{
 		fir.setCriminals(firDto.getCriminals());
 		fir.setLocalDateTime(firDto.getLocalDateTime());
 		fir.setOfficer(firDto.getOfficer());
-		fir.setOpen(firDto.isOpen());
+		fir.setOpen(firDto.getIsOpen());
 		fir.setPoliceStation(firDto.getPoliceStation());
 		return fir;
-	}
-
-	@Override
-	public void deleteFir(Integer firId) {
-		// TODO Auto-generated method stub
-		firRepo.deleteById(firId);
 	}
 }

@@ -1,5 +1,6 @@
 package com.fir.system.Controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +10,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fir.system.DTO.FirDTO;
+import com.fir.system.Entity.Fir;
 import com.fir.system.Entity.Police;
 import com.fir.system.Entity.PoliceStation;
 import com.fir.system.Entity.User;
@@ -82,15 +85,24 @@ public class FirController {
 		return new ResponseEntity<Object>(firDto,HttpStatus.ACCEPTED);
 	}
 	
-//	@GetMapping(value="/user/fir/{stationId}")
-//	public ResponseEntity<FirDTO> getOldest_Open_Fir_from_Station(@PathVariable("stationId") Integer stationId)
-//	{
-//		return new ResponseEntity<FirDTO>(,HttpStatus.ACCEPTED);
-//	}
+ 
 	@DeleteMapping(value="/user/fir/{firId}")
 	public ResponseEntity<Object> deleteFir(@PathVariable("firId") Integer firId)
 	{
 		friServRepo.deleteFir(firId);
 		return new ResponseEntity<Object>("Delete",HttpStatus.ACCEPTED);
 	}
+	@PutMapping(value="/user/fir/{firId")
+	public ResponseEntity<FirDTO> updateFir(@PathVariable("firId") Integer firId,@RequestBody FirDTO firDto){
+		
+		return new ResponseEntity<FirDTO>(friServRepo.updateFir(firId,firDto),HttpStatus.ACCEPTED);
+	}
+	
+//	@GetMapping(value="/police/fir/{policeId}")
+//	public ResponseEntity<List<Fir>> getFirByPoliceId(@PathVariable("policeId") Integer policeId)
+//	{
+//		
+//		return new ResponseEntity<List<Fir>>(policeServRepo.getFirByPoliceId(policeId),HttpStatus.FOUND);
+//	}
+	
 }

@@ -61,10 +61,10 @@ public class FirDTO {
 	public void setPoliceStation(PoliceStation policeStation) {
 		this.policeStation = policeStation;
 	}
-	public boolean isOpen() {
+	public boolean getIsOpen() {
 		return isOpen;
 	}
-	public void setOpen(boolean isOpen) {
+	public void setIsOpen(boolean isOpen) {
 		this.isOpen = isOpen;
 	}
 	public FirDTO(Integer firId, String crimeDetail, LocalDateTime localDateTime, User applicant, List<User> criminals,

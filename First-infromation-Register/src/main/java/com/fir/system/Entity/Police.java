@@ -25,8 +25,7 @@ public class Police {
 	@JoinColumn(name="assign_to_police")
 	@OrderColumn(name="assign_me")
 	private List<Fir> firList;
-	
-	@OneToMany(targetEntity=Fir.class,cascade=CascadeType.ALL)
+	@OneToMany(targetEntity=Fir.class,cascade=CascadeType.DETACH)
 	@JoinColumn(name="close_by_police")
 	@OrderColumn(name="close_by_me")
 	private List<Fir> casesClosed;

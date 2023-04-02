@@ -1,8 +1,11 @@
 package com.fir.system.Service.Implement;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fir.system.Entity.Fir;
 import com.fir.system.Entity.Police;
 import com.fir.system.Repositroy.FirRepository;
 import com.fir.system.Repositroy.PoliceRepository;
@@ -27,6 +30,5 @@ public class PoliceIntrImpl implements PoliceIntr {
 		// TODO Auto-generated method stub
 		return policRepo.save(police);
 	}
-
 	
 }
